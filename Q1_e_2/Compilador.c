@@ -4,7 +4,7 @@
 int main()
 {
 
-    int system_result = system("gcc -o Main ../Main.c ../Algoritmos/Algoritmos.c ../Grafos/Grafos.c ../Hanoi/Hanoi.c ../Utilitarios/Utilitarios.c");
+    int system_result = system("gcc -o Main ../Main.c ../Algoritmos/Algoritmos.c ../Grafos/Grafos.c ../Hanoi/Hanoi.c ../Utilitarios/Utilitarios.c ../Cronometro/Cronometro.c");
 
     if (system_result == 0)
     {
