@@ -5,7 +5,7 @@
 typedef struct MATRIZ_ADJACENCIA
 {
     short int bolean;
-    int peso_aresta; // Peso da aresta, se for ponderada
+    float peso_aresta; // Peso da aresta, se for ponderada
 
 } MATRIZ_ADJACENCIA;
 
@@ -30,7 +30,7 @@ GRAFO criar_grafo(short int eh_ponderado, short int eh_digrafo, int n_vertices);
 
 void liberar_grafo(GRAFO *grafo);
 
-short int criar_aresta(GRAFO *grafo, int vertice_origem, int vertice_destino, int peso);
+short int criar_aresta(GRAFO *grafo, int vertice_origem, int vertice_destino, float peso);
 
 short int apagar_aresta(GRAFO *grafo, int vertice_origem, int vertice_destino);
 

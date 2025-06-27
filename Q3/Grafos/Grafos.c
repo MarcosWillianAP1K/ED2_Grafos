@@ -77,7 +77,7 @@ void liberar_grafo(GRAFO *grafo)
 
 //=========================ARESTAS==========================
 
-short int criar_aresta(GRAFO *grafo, int vertice_origem, int vertice_destino, int peso)
+short int criar_aresta(GRAFO *grafo, int vertice_origem, int vertice_destino, float peso)
 {
     short int retorno = 0;
 

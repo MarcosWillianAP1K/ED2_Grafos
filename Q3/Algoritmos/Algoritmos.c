@@ -4,6 +4,8 @@
 #include "Algoritmos.h"
 #include "../Utilitarios/Utilitarios.h"
 
+#define FLOAT_MIN -0.0000000001 // Valor mínimo para comparação de distâncias
+
 /****************************************
  * *
  * IMPLEMENTAÇÃO: VETOR_MAIOR_CAMINHO *
@@ -52,7 +54,7 @@ void imprimir_vetor_maior_caminho(VETOR_MAIOR_CAMINHO *vetor, int n_vertices)
             printf("Dist: Infinito, Ant: %d\n", vetor[i].vertice_anterior);
         }
         else
-            printf("Dist: %d, Ant: %d\n", vetor[i].distancia, vetor[i].vertice_anterior + 1);
+            printf("Dist: %lf, Ant: %d\n", vetor[i].distancia, vetor[i].vertice_anterior + 1);
     }
 }
 
@@ -116,7 +118,8 @@ VETOR_MAIOR_CAMINHO *dijkstra_maior_caminho(GRAFO *grafo, int vertice_inicial)
 
         for (int qtdRelaxamentos = 0; qtdRelaxamentos < grafo->n_vertices - 1; qtdRelaxamentos++)
         {
-            int distanciaMaxima = INT_MIN, indiceVerticeAtual = 0;
+            float distanciaMaxima = FLOAT_MIN;
+            int indiceVerticeAtual = 0;
 
             for (int i = 0; i < grafo->n_vertices; i++)
             {
@@ -133,8 +136,9 @@ VETOR_MAIOR_CAMINHO *dijkstra_maior_caminho(GRAFO *grafo, int vertice_inicial)
             {
                 if (!vetor_vertices[i].vertice_visitado && grafo->matriz_adjacencia[indiceVerticeAtual][i].bolean)
                 {
-                    int dist = vetor_vertices[indiceVerticeAtual].distancia + grafo->matriz_adjacencia[indiceVerticeAtual][i].peso_aresta;
-                    if (vetor_vertices[indiceVerticeAtual].distancia != INT_MIN && dist > vetor_vertices[i].distancia)
+                    float dist = vetor_vertices[indiceVerticeAtual].distancia + grafo->matriz_adjacencia[indiceVerticeAtual][i].peso_aresta;
+                    
+                    if (vetor_vertices[indiceVerticeAtual].distancia != FLOAT_MIN && dist > vetor_vertices[i].distancia)
                     {
                         vetor_vertices[i].distancia = dist;
                         vetor_vertices[i].vertice_anterior = indiceVerticeAtual;

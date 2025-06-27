@@ -7,7 +7,7 @@ typedef struct VETOR_MAIOR_CAMINHO
 {
     int vertice_anterior;
     short int vertice_visitado; 
-    int distancia;
+    float distancia;
 } VETOR_MAIOR_CAMINHO;
 
 

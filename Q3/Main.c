@@ -4,7 +4,7 @@
 
 #define N_VERTICES 5 // Número de vértices do grafo
 #define VERTICE_INICIAL 1 // Vértice inicial para os algoritmos de caminho máximo
-#define VERTICE_FINAL 3   // Vértice final para os algoritmos de caminho máximo
+#define VERTICE_FINAL 5   // Vértice final para os algoritmos de caminho máximo
 
 
 int main()
@@ -15,11 +15,11 @@ int main()
 
     //Criando as arestas do grafo
 
-    criar_aresta(&grafo, 1, 2, 10); 
-    criar_aresta(&grafo, 1, 3, 5);
-    criar_aresta(&grafo, 2, 4, 15);
-    criar_aresta(&grafo, 3, 4, 20);
-    criar_aresta(&grafo, 4, 5, 10);
+    criar_aresta(&grafo, 1, 2, 0.1); 
+    criar_aresta(&grafo, 1, 3, 0.5);
+    criar_aresta(&grafo, 2, 4, 0.15);
+    criar_aresta(&grafo, 3, 4, 0.2);
+    criar_aresta(&grafo, 4, 5, 0.10);
 
 
     //Imprimindo a matriz de adjacência do grafo
