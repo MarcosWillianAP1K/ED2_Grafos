@@ -60,15 +60,26 @@ void imprimir_caminho(VETOR_CAMINHO_MINIMO *caminho, int vertice_inicial, int ve
 
         if (caminho[vertice_final - 1].distancia != INT_MAX)
         {
-            printf("Caminho do vertice %d ao vertice %d:\n", vertice_inicial, vertice_final);
 
+            int quant_vertices = 0;
             int anterior = vertice_final - 1;
 
-            for (int i = caminho[anterior].distancia; i >= 0; i--)
+            while (anterior != vertice_inicial - 1 && anterior >= 0)
+            {
+                quant_vertices++;
+                anterior = caminho[anterior].vertice_anterior;
+            }
+
+
+            printf("Caminho do vertice %d ao vertice %d:\n", vertice_inicial, vertice_final);
+
+            anterior = vertice_final - 1;
+
+            for (int i = quant_vertices; i >= 0; i--)
             {
                 if (anterior != vertice_inicial - 1)
                 {
-                    printf("%d - ", anterior + 1);              // Imprime o vértice atual
+                    printf("%d - ", anterior + 1);                 // Imprime o vértice atual
                     anterior = caminho[anterior].vertice_anterior; // Move para o vértice anterior
                 }
                 else
@@ -84,7 +95,6 @@ void imprimir_caminho(VETOR_CAMINHO_MINIMO *caminho, int vertice_inicial, int ve
     }
 }
 
-
 /****************************************
  * *
  * IMPLEMENTAÇÃO: Dijkstra       *
@@ -99,32 +109,32 @@ VETOR_CAMINHO_MINIMO *dijkstra(GRAFO *grafo, int vertice_inicial)
     {
         vetor_vertices = alocar_vetor_caminho_minimo(grafo->n_vertices);
         vetor_vertices[vertice_inicial - 1].distancia = 0;
-    }
 
-    for (int qtdRelaxamentos = 0; qtdRelaxamentos < grafo->n_vertices - 1; qtdRelaxamentos++)
-    {
-        int distanciaMinima = INT_MAX, indiceVerticeAtual = 0;
-
-        for (int i = 0; i < grafo->n_vertices; i++)
+        for (int qtdRelaxamentos = 0; qtdRelaxamentos < grafo->n_vertices - 1; qtdRelaxamentos++)
         {
-            if ((!vetor_vertices[i].vertice_visitado && vetor_vertices[i].distancia <= distanciaMinima))
-            {
-                distanciaMinima = vetor_vertices[i].distancia;
-                indiceVerticeAtual = i;
-            }
-        }
+            int distanciaMinima = INT_MAX, indiceVerticeAtual = 0;
 
-        vetor_vertices[indiceVerticeAtual].vertice_visitado = 1;
-
-        for (int i = 0; i < grafo->n_vertices; i++)
-        {
-            if (!vetor_vertices[i].vertice_visitado && grafo->matriz_adjacencia[indiceVerticeAtual][i].bolean)
+            for (int i = 0; i < grafo->n_vertices; i++)
             {
-                int dist = vetor_vertices[indiceVerticeAtual].distancia + grafo->matriz_adjacencia[indiceVerticeAtual][i].peso_aresta;
-                if (dist < vetor_vertices[i].distancia)
+                if ((!vetor_vertices[i].vertice_visitado && vetor_vertices[i].distancia <= distanciaMinima))
                 {
-                    vetor_vertices[i].distancia = dist;
-                    vetor_vertices[i].vertice_anterior = indiceVerticeAtual;
+                    distanciaMinima = vetor_vertices[i].distancia;
+                    indiceVerticeAtual = i;
+                }
+            }
+
+            vetor_vertices[indiceVerticeAtual].vertice_visitado = 1;
+
+            for (int i = 0; i < grafo->n_vertices; i++)
+            {
+                if (!vetor_vertices[i].vertice_visitado && grafo->matriz_adjacencia[indiceVerticeAtual][i].bolean)
+                {
+                    int dist = vetor_vertices[indiceVerticeAtual].distancia + grafo->matriz_adjacencia[indiceVerticeAtual][i].peso_aresta;
+                    if (dist < vetor_vertices[i].distancia)
+                    {
+                        vetor_vertices[i].distancia = dist;
+                        vetor_vertices[i].vertice_anterior = indiceVerticeAtual;
+                    }
                 }
             }
         }
@@ -152,7 +162,6 @@ VETOR_CAMINHO_MINIMO *bellman_ford(GRAFO *grafo, int vertice_inicial, int *tem_c
             printf("Aviso: Bellman-Ford esta sendo executado em um grafo nao direcionado e ponderado.\n");
         }
 
-        
         // 1. Inicialização
         vetor_vertices = alocar_vetor_caminho_minimo(grafo->n_vertices);
         vetor_vertices[vertice_inicial - 1].distancia = 0;
@@ -195,12 +204,11 @@ VETOR_CAMINHO_MINIMO *bellman_ford(GRAFO *grafo, int vertice_inicial, int *tem_c
             }
         }
     }
-
-    if (tem_ciclo_negativo != NULL)
-            *tem_ciclo_negativo = 0;
+    else
+    {
+        if (tem_ciclo_negativo != NULL)
+            *tem_ciclo_negativo = 0; // Se os parâmetros não são válidos, define a flag como 0
+    }
 
     return vetor_vertices;
 }
-
-
-
