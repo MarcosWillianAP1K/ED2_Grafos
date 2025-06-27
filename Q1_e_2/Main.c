@@ -89,10 +89,49 @@ int main()
 
     imprimir_matriz_grafo(&grafo_hanoi);
 
+    printf("\nGrafo de Hanoi construído.\n\n");
 
+    int vertice_inicial = 1; // Vértice inicial para os algoritmos
+
+    printf("Calculando caminho mínimo usando Dijkstra...\n\n");
+
+    VETOR_CAMINHO_MINIMO *caminho_dijkstra = dijkstra(&grafo_hanoi, vertice_inicial); // Calcula o caminho mínimo a partir do vértice 1
+
+    if (caminho_dijkstra != NULL)
+    {
+        printf("Caminho mínimo encontrado:\n");
+        for (int i = 0; i < grafo_hanoi.n_vertices; i++)
+        {
+            printf("Vertice %d: %d\n", i + 1, caminho_dijkstra[i].distancia);
+        }
+    }
+    else
+    {
+        printf("Nenhum caminho encontrado.\n");
+    }
+
+    printf("\n\nCalculando caminho mínimo usando Bellman-Ford...\n\n");
+    int tem_ciclo_negativo = 0; // Flag para verificar se há ciclo negativo
+
+    VETOR_CAMINHO_MINIMO *caminho_bellman_ford = bellman_ford(&grafo_hanoi, vertice_inicial, &tem_ciclo_negativo); // Calcula o caminho mínimo a partir do vértice 1
+
+    if (caminho_bellman_ford != NULL)
+    {
+        printf("Caminho mínimo encontrado (Bellman-Ford):\n");
+        for (int i = 0; i < grafo_hanoi.n_vertices; i++)
+        {
+            printf("Vertice %d: %d\n", i + 1, caminho_bellman_ford[i].distancia);
+        }
+    }
+    else
+    {
+        printf("Nenhum caminho encontrado (Bellman-Ford).\n");
+    }
 
     liberar_grafo(&grafo_hanoi);
     liberar_hanoi(&hanoi);
+    liberar_vetor_caminho_minimo(&caminho_dijkstra);
+    liberar_vetor_caminho_minimo(&caminho_bellman_ford);
 
     return 0;
 }
