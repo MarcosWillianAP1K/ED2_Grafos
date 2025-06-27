@@ -4,13 +4,15 @@
 #include "Algoritmos/Algoritmos.h"
 #include "Cronometro/Cronometro.h"
 
-#define N_PINOS 3     // Número de pinos (torres) para a Torre de Hanói
-#define N_DISCOS 3    // Número de discos para a Torre de Hanói
+#define N_PINOS 3       // Número de pinos (torres) para a Torre de Hanói
+#define N_DISCOS 3      // Número de discos para a Torre de Hanói
 #define N_TESTES 100000 // Número de testes para o desempenho
 // Lembrando que o grafo começa do vertice 1, Não tem vértice 0
 //  Portanto, o vértice 1 é o primeiro vértice do grafo.
 //  Apenas por questões esteticas...
 #define VERTICE_INICIAL 1 // Vértice inicial para os algoritmos de caminho mínimo
+#define VERTICE_FINAL 27   // Vértice final para os algoritmos de caminho mínimo
+
 
 short int aresta_hanoi(const CONFIGURACOES v1, const CONFIGURACOES v2)
 {
@@ -103,43 +105,40 @@ int main()
 
     VETOR_CAMINHO_MINIMO *caminho_dijkstra = dijkstra(&grafo_hanoi, VERTICE_INICIAL); // Calcula o caminho mínimo a partir do vértice 1
 
-    if (caminho_dijkstra != NULL)
-    {
-        printf("Caminho minimo encontrado:\n");
-        for (int i = 0; i < grafo_hanoi.n_vertices; i++)
-        {
-            printf("Vertice %d: %d\n", i + 1, caminho_dijkstra[i].distancia);
-        }
-    }
-    else
+    if (caminho_dijkstra == NULL)
     {
         printf("Nenhum caminho encontrado.\n");
     }
+
+    // Imprimindo o vetor de caminho mínimo encontrado por Dijkstra
+    printf("\nVetor de caminho minimo encontrado por Dijkstra:\n");
+    imprimir_vetor_caminho_minimo(caminho_dijkstra, grafo_hanoi.n_vertices); // Imprime o vetor de caminho mínimo encontrado por Dijkstra
 
     printf("\n\nCalculando caminho minimo usando Bellman-Ford...\n\n");
     int tem_ciclo_negativo = 0; // Flag para verificar se há ciclo negativo
 
     VETOR_CAMINHO_MINIMO *caminho_bellman_ford = bellman_ford(&grafo_hanoi, VERTICE_INICIAL, &tem_ciclo_negativo); // Calcula o caminho mínimo a partir do vértice 1
 
-    if (caminho_bellman_ford != NULL)
-    {
-        printf("Caminho minimo encontrado (Bellman-Ford):\n");
-        for (int i = 0; i < grafo_hanoi.n_vertices; i++)
-        {
-            printf("Vertice %d: %d\n", i + 1, caminho_bellman_ford[i].distancia);
-        }
-    }
-    else
+    if (caminho_bellman_ford == NULL)
     {
         printf("Nenhum caminho encontrado (Bellman-Ford).\n");
     }
 
+    // Imprimindo o vetor de caminho mínimo encontrado por Bellman-Ford
+    printf("\nVetor de caminho minimo encontrado por Bellman-Ford:\n");
+    imprimir_vetor_caminho_minimo(caminho_bellman_ford, grafo_hanoi.n_vertices); // Imprime o vetor de caminho mínimo encontrado por Bellman-Ford
 
+
+    printf("\n\n");
+    // Imprimindo o caminho mínimo encontrado por Dijkstra
+    imprimir_caminho(caminho_dijkstra, VERTICE_INICIAL, VERTICE_FINAL); // Imprime o caminho do vértice 
+
+    printf("\n\n");
+    // Imprimindo o caminho mínimo encontrado por Bellman-Ford
+    imprimir_caminho(caminho_bellman_ford, VERTICE_INICIAL, VERTICE_FINAL); // Imprime o caminho do vértice
 
 
     //==============TESTES DE DESEMPENHO=========================
-
-
 
     printf("\n\n");
     printf("Iniciando teste de desempenho EXECUTANDO %d VEZES os algoritmos de caminho mínimo...\n", N_TESTES);
@@ -184,15 +183,9 @@ int main()
 
     tempo_bellman_ford = converter_para_milisegundos(cronometro); // Converte o tempo para microsegundos
 
-
-    
     printf("Resultados dos testes de desempenho:\n");
     printf("Dijkstra: %.5f ms\n", tempo_dijkstra);
     printf("Bellman-Ford: %.5f ms\n", tempo_bellman_ford);
-
-
-
-
 
     // Liberando a memória alocada
     liberar_grafo(&grafo_hanoi);

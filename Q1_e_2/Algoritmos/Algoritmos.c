@@ -40,10 +40,10 @@ VETOR_CAMINHO_MINIMO *alocar_vetor_caminho_minimo(int n_vertices)
 
 void imprimir_vetor_caminho_minimo(VETOR_CAMINHO_MINIMO *vetor, int n_vertices)
 {
-    printf("Resultado (Vértice: Distância, Anterior):\n");
+    printf("Resultado (Vertice: Distancia, Anterior):\n");
     for (int i = 0; i < n_vertices; i++)
     {
-        printf("  Vértice %d: ", i + 1);
+        printf("  Vertice %d: ", i + 1);
         if (vetor[i].distancia == INT_MAX)
         {
             printf("Dist: Infinito, Ant: %d\n", vetor[i].vertice_anterior);
@@ -52,6 +52,38 @@ void imprimir_vetor_caminho_minimo(VETOR_CAMINHO_MINIMO *vetor, int n_vertices)
             printf("Dist: %d, Ant: %d\n", vetor[i].distancia, vetor[i].vertice_anterior + 1);
     }
 }
+
+void imprimir_caminho(VETOR_CAMINHO_MINIMO *caminho, int vertice_inicial, int vertice_final)
+{
+    if (caminho != NULL && vertice_inicial > 0 && vertice_final > 0)
+    {
+
+        if (caminho[vertice_final - 1].distancia != INT_MAX)
+        {
+            printf("Caminho do vertice %d ao vertice %d:\n", vertice_inicial, vertice_final);
+
+            int anterior = vertice_final - 1;
+
+            for (int i = caminho[anterior].distancia; i >= 0; i--)
+            {
+                if (anterior != vertice_inicial - 1)
+                {
+                    printf("%d - ", anterior + 1);              // Imprime o vértice atual
+                    anterior = caminho[anterior].vertice_anterior; // Move para o vértice anterior
+                }
+                else
+                {
+                    printf("%d\n", anterior + 1); // Imprime o vértice inicial
+                }
+            }
+        }
+        else
+        {
+            printf("Nao ha caminho do vertice %d ao vertice %d.\n", vertice_inicial, vertice_final);
+        }
+    }
+}
+
 
 /****************************************
  * *

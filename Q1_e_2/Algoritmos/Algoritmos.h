@@ -18,7 +18,7 @@ VETOR_CAMINHO_MINIMO *alocar_vetor_caminho_minimo(int n_vertices);
 
 void imprimir_vetor_caminho_minimo(VETOR_CAMINHO_MINIMO *vetor, int n_vertices);
 
-
+void imprimir_caminho(VETOR_CAMINHO_MINIMO *caminho, int vertice_inicial, int vertice_final);
 
 VETOR_CAMINHO_MINIMO *dijkstra(GRAFO *grafo, int vertice_inicial);
 
