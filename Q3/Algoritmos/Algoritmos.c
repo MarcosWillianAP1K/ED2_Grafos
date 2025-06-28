@@ -4,7 +4,7 @@
 #include "Algoritmos.h"
 #include "../Utilitarios/Utilitarios.h"
 
-#define FLOAT_MIN -0.0000000001 // Valor mínimo para comparação de distâncias
+
 
 /****************************************
  * *
@@ -29,6 +29,7 @@ void inicializar_vetor_maior_caminho(VETOR_MAIOR_CAMINHO *vetor, int n_vertices)
         vetor[i].vertice_anterior = -1;
         vetor[i].vertice_visitado = 0;
         vetor[i].distancia = INT_MIN; // Sempre inicializa para maior caminho
+        
     }
 }
 
@@ -118,7 +119,7 @@ VETOR_MAIOR_CAMINHO *dijkstra_maior_caminho(GRAFO *grafo, int vertice_inicial)
 
         for (int qtdRelaxamentos = 0; qtdRelaxamentos < grafo->n_vertices - 1; qtdRelaxamentos++)
         {
-            float distanciaMaxima = FLOAT_MIN;
+            float distanciaMaxima = INT_MIN;
             int indiceVerticeAtual = 0;
 
             for (int i = 0; i < grafo->n_vertices; i++)
@@ -138,7 +139,7 @@ VETOR_MAIOR_CAMINHO *dijkstra_maior_caminho(GRAFO *grafo, int vertice_inicial)
                 {
                     float dist = vetor_vertices[indiceVerticeAtual].distancia + grafo->matriz_adjacencia[indiceVerticeAtual][i].peso_aresta;
                     
-                    if (vetor_vertices[indiceVerticeAtual].distancia != FLOAT_MIN && dist > vetor_vertices[i].distancia)
+                    if (vetor_vertices[indiceVerticeAtual].distancia != INT_MIN && dist > vetor_vertices[i].distancia)
                     {
                         vetor_vertices[i].distancia = dist;
                         vetor_vertices[i].vertice_anterior = indiceVerticeAtual;
