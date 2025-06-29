@@ -27,12 +27,24 @@ FUNCIONARIO criar_funcionario(const char *matricula, const char *nome, const cha
 
 void imprimir_funcionario(const FUNCIONARIO *funcionario)
 {
-    printf("Matrícula: %s\n", funcionario->matricula);
+    printf("Matricula: %s\n", funcionario->matricula);
     printf("Nome: %s\n", funcionario->nome);
-    printf("Função: %s\n", funcionario->funcao);
-    printf("Salário: %.2f\n", funcionario->salario);
+    printf("Funcao: %s\n", funcionario->funcao);
+    printf("Salario: %.2f\n", funcionario->salario);
 }
 
+void imprimir_vetor_funcionarios(const FUNCIONARIO *vetor, int tamanho)
+{
+    for (int i = 0; i < tamanho; i++)
+    {
+        if (vetor[i].matricula[0] != '\0') // Verifica se a matrícula não está vazia
+        {
+            printf("Posicao %d:\n", i);
+            imprimir_funcionario(&vetor[i]);
+            printf("\n");
+        }
+    }
+}
 
 FUNCIONARIO *inicializar_vetor_funcionarios(int tamanho)
 {

@@ -93,65 +93,82 @@ int tratar_colisao(int resultado, int digito)
     return resultado + digito; // Soma o dígito ao resultado
 }
 
-void funcao_hash_A(FUNCIONARIO *vetor, int tamanho, FUNCIONARIO inserir)
+int funcao_hash_A(char *matricula, int tamanho)
 {
-    char matricula[7];
-    strncpy(matricula, inserir.matricula, sizeof(matricula) - 1);
-    matricula[sizeof(matricula) - 1] = '\0'; // Garantir que a string esteja terminada
+    char matricula_aux[7];
+    strncpy(matricula_aux, matricula, sizeof(matricula_aux) - 1);
+    matricula_aux[sizeof(matricula_aux) - 1] = '\0'; // Garantir que a string esteja terminada
 
     // Rotação duas vezes para a esquerda
-    rotacao_esquerda(matricula); // Rotaciona a matrícula para a esquerda
-    rotacao_esquerda(matricula); // Rotaciona novamente para a esquerda
+    rotacao_esquerda(matricula_aux); // Rotaciona a matrícula para a esquerda
+    rotacao_esquerda(matricula_aux); // Rotaciona novamente para a esquerda
 
     char numeros_extraidos[4] = {0};
 
-    numeros_extraidos[0] = extrair_caractere(matricula, 2);
-    numeros_extraidos[1] = extrair_caractere(matricula, 4);
-    numeros_extraidos[2] = extrair_caractere(matricula, 5);
+    numeros_extraidos[0] = extrair_caractere(matricula_aux, 2);
+    numeros_extraidos[1] = extrair_caractere(matricula_aux, 4);
+    numeros_extraidos[2] = extrair_caractere(matricula_aux, 5);
     numeros_extraidos[3] = '\0'; // Null terminator
 
     int resultado = atoi(numeros_extraidos); // Converte os caracteres extraídos para inteiro
 
     resultado = resto_divisao(resultado, tamanho); // Calcula o resto da divisão pelo tamanho do vetor
 
-    short int valido = 1;               // Variável para verificar se a posição está livre
-    short int loop = 0;                 // Variável para controlar o loop
-    int resultado_original = resultado; // Armazena o resultado original para verificar colisões
+    return resultado; // Retorna o resultado da função hash
+}
 
-    while (valido)
+short int inserir_funcionario_hash_A(FUNCIONARIO *vetor, int tamanho, FUNCIONARIO inserir)
+{
+    short int retorno = 0; // Variavel para indicar sucesso ou falha na inserção
+
+    int resultado = funcao_hash_A(inserir.matricula, tamanho); // Calcula o resultado da função hash
+
+    // Verifica se a matricula é igual
+    if (strcmp(vetor[resultado].matricula, inserir.matricula) != 0)
     {
-        int aux = resultado; // Armazena o resultado atual
 
-        if (resultado >= tamanho) // Verifica se o resultado é maior ou igual ao tamanho do vetor
+        short int valido = 1;               // Variável para verificar se a posição está livre
+        short int loop = 0;                 // Variável para controlar o loop
+        int resultado_original = resultado; // Armazena o resultado original para verificar colisões
+
+        while (valido)
         {
-            aux = resultado - ((resultado / tamanho) * tamanho); // Se for, redefine para 0
-
-            if (loop == 1) // Se for a primeira iteração, redefine o resultado para 0
+            if (resultado >= tamanho) // Verifica se o resultado é maior ou igual ao tamanho do vetor
             {
-                valido = 0;
+                resultado = resto_divisao(resultado, tamanho); // Redefine o resultado para o resto da divisão pelo tamanho do vetor
 
-                //Sobreescreve no resultado o valor original e o loop finaliza
-                resultado = resultado_original;
-            }
+                if (loop == 1) // Se ja tiver feito um loop entra aqui
+                {
+                    valido = 0;
 
-            loop = 1; // Define que já foi feita uma iteração
-        }
-        else
-        {
+                    // Não tinha posições livres, então insere na posição original, mesmo que tenha colidido
+                    vetor[resultado_original] = inserir; // Insere o funcionário na posição original
+                    retorno = 2;                         // Retorno 2 indica que não havia posições livres e foi inserido na posição original
+                }
 
-            if (vetor[aux].matricula[0] == '\0') // Verifica se a posição está livre
-            {
-                vetor[aux] = inserir; // Insere o funcionário na posição livre
-                valido = 0;           // Define como inválido para sair do loop
+                loop = 1; // Define que já foi feita uma iteração
             }
             else
             {
-                char primeiro_digito = extrair_caractere(vetor[aux].matricula, 1); // Extrai o primeiro dígito da matrícula
-                resultado = tratar_colisao(resultado, atoi(&primeiro_digito)); // Trata colisão somando o primeiro dígito da matrícula
+                // Verifica se a matricula é igual
+                if (strcmp(vetor[resultado].matricula, inserir.matricula) == 0)
+                {
+                    valido = 0; // Define como inválido para sair do loop
+                }
+                else if (vetor[resultado].matricula[0] == '\0') // Verifica se a posição está livre
+                {
+                    vetor[resultado] = inserir; // Insere o funcionário na posição livre
+                    valido = 0;                 // Define como inválido para sair do loop
+                    retorno = 1;
+                }
+                else
+                {
+                    char primeiro_digito = extrair_caractere(inserir.matricula, 1); // Extrai o primeiro dígito da matrícula
+                    resultado = tratar_colisao(resultado, atoi(&primeiro_digito));  // Trata colisão somando o primeiro dígito da matrícula
+                }
             }
         }
     }
 
-
-    vetor[resultado] = inserir; // Insere o funcionário na posição final
+    return retorno; // Retorna a posição onde o funcionário foi inserido
 }

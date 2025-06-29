@@ -16,3 +16,5 @@ FUNCIONARIO *inicializar_vetor_funcionarios(int tamanho);
 FUNCIONARIO criar_funcionario(const char *matricula, const char *nome, const char *funcao, float salario);
 
 void imprimir_funcionario(const FUNCIONARIO *funcionario);
+
+void imprimir_vetor_funcionarios(const FUNCIONARIO *vetor, int tamanho);
