@@ -5,4 +5,8 @@
 
 short int inserir_funcionario_hash_A(FUNCIONARIO *vetor, int tamanho, FUNCIONARIO inserir);
 
+FUNCIONARIO *buscar_funcionario_hash_A(FUNCIONARIO *vetor, int tamanho, const char *matricula);
+
 short int inserir_funcionario_hash_B(FUNCIONARIO *vetor, int tamanho, FUNCIONARIO inserir);
+
+FUNCIONARIO *buscar_funcionario_hash_B(FUNCIONARIO *vetor, int tamanho, const char *matricula);

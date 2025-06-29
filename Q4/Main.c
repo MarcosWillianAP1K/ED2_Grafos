@@ -81,6 +81,34 @@ void teste_funcao_hash_A()
     printf("\nFuncionarios inseridos:\n");
     imprimir_vetor_funcionarios(vetor, TAMANHO_VETOR_1);
 
+
+    // Buscando funcionários no vetor usando a função hash A
+    FUNCIONARIO *buscado1 = buscar_funcionario_hash_A(vetor, TAMANHO_VETOR_1, "123456");
+    FUNCIONARIO *buscado2 = buscar_funcionario_hash_A(vetor, TAMANHO_VETOR_1, "234567");
+
+
+    // Verificando os resultados da busca
+
+    if (buscado1 != NULL)
+    {
+        printf("\nFuncionario buscado 1:\n");
+        imprimir_funcionario(*buscado1); // Imprime os detalhes do funcionário buscado 1
+    }
+    else
+    {
+        printf("Funcionario buscado 1 não encontrado.\n");
+    }
+
+    if (buscado2 != NULL)
+    {
+        printf("Funcionario buscado 2:\n");
+        imprimir_funcionario(*buscado2); // Imprime os detalhes do funcionário buscado 2
+    }
+    else
+    {
+        printf("Funcionario buscado 2 não encontrado.\n");
+    }
+
     free(vetor); // Libera a memória alocada para o vetor de funcionários
 
     printf("\n\nTeste da função hash A concluído.\n\n");
@@ -160,6 +188,33 @@ void teste_funcao_hash_B()
     // Imprimindo os funcionários inseridos
     printf("\nFuncionarios inseridos:\n");
     imprimir_vetor_funcionarios(vetor, TAMANHO_VETOR_1);
+
+    // Buscando funcionários no vetor usando a função hash B
+    FUNCIONARIO *buscado1 = buscar_funcionario_hash_B(vetor, TAMANHO_VETOR_1, "123456");
+    FUNCIONARIO *buscado2 = buscar_funcionario_hash_B(vetor, TAMANHO_VETOR_1, "234567");
+
+    // Verificando os resultados da busca
+
+    if (buscado1 != NULL)
+    {
+        printf("\nFuncionario buscado 1:\n");
+        imprimir_funcionario(*buscado1); // Imprime os detalhes do funcionário buscado 1
+    }
+    else
+    {
+        printf("Funcionario buscado 1 não encontrado.\n");
+    }
+
+    if (buscado2 != NULL)
+    {
+        printf("Funcionario buscado 2:\n");
+
+        imprimir_funcionario(*buscado2); // Imprime os detalhes do funcionário buscado 2
+    }
+    else
+    {
+        printf("Funcionario buscado 2 não encontrado.\n");
+    }
 
     free(vetor); // Libera a memória alocada para o vetor de funcionários
 
