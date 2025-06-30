@@ -157,7 +157,7 @@ short int inserir_funcionario_hash_A(FUNCIONARIO *vetor, int tamanho, FUNCIONARI
             // Se o digito for divisível pelo tamanho
             loop_maximo = 2;
         }
-        else if (tamanho % primeiro_digito != 0 && ((primeiro_digito % 2 == 0 && tamanho % 2 == 0) || (primeiro_digito % 2 != 0 && tamanho % 2 != 0)))
+        else if (((primeiro_digito % 2 == 0 && tamanho % 2 == 0) || (primeiro_digito % 2 != 0 && tamanho % 2 != 0)))
         {
             // Se o digito não for divisível pelo tamanho e ambos forem pares ou ímpares
             loop_maximo = 3;
@@ -314,7 +314,7 @@ short int inserir_funcionario_hash_B(FUNCIONARIO *vetor, int tamanho, FUNCIONARI
             // Se o digito for divisível pelo tamanho
             loop_maximo = 2;
         }
-        else if (tamanho % digito_tratamento != 0 && ((digito_tratamento % 2 == 0 && tamanho % 2 == 0) || (digito_tratamento % 2 != 0 && tamanho % 2 != 0)))
+        else if (((digito_tratamento % 2 == 0 && tamanho % 2 == 0) || (digito_tratamento % 2 != 0 && tamanho % 2 != 0)))
         {
             // Se o digito não for divisível pelo tamanho e ambos forem pares ou ímpares
             loop_maximo = 3;
