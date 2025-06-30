@@ -6,7 +6,7 @@
 
 #define N_PINOS 3       // Número de pinos (torres) para a Torre de Hanói
 #define N_DISCOS 4      // Número de discos para a Torre de Hanói
-#define N_TESTES 100000 // Número de testes para o desempenho
+#define N_TESTES 100     // Número de testes para o desempenho
 // Lembrando que o grafo começa do vertice 1, Não tem vértice 0
 //  Portanto, o vértice 1 é o primeiro vértice do grafo.
 //  Apenas por questões esteticas...
