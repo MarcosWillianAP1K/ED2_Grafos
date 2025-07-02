@@ -49,30 +49,30 @@ void fold_shift(const char *entrada, char *saida)
 {
     // Extração dos caracteres
 
-    char conjunto1[3] = {0};
-    char conjunto2[3] = {0};
-    char conjunto3[3] = {0};
+    char conjunto1[4] = {0};
+    char conjunto2[4] = {0};
+    
 
     // Extração dos caracteres de acordo com a posição
     conjunto1[0] = extrair_caractere(entrada, 1);
     conjunto1[1] = extrair_caractere(entrada, 2);
-    conjunto1[2] = '\0'; // Null terminator
+    conjunto1[2] = extrair_caractere(entrada, 6);
+    conjunto1[3] = '\0'; // Null terminator
 
-    conjunto2[0] = extrair_caractere(entrada, 6);
-    conjunto2[1] = extrair_caractere(entrada, 3);
-    conjunto2[2] = '\0'; // Null terminator
+    conjunto2[0] = extrair_caractere(entrada, 3);
+    conjunto2[1] = extrair_caractere(entrada, 4);
+    conjunto2[2] = extrair_caractere(entrada, 5);
+    conjunto2[3] = '\0'; // Null terminator
 
-    conjunto3[0] = extrair_caractere(entrada, 4);
-    conjunto3[1] = extrair_caractere(entrada, 5);
-    conjunto3[2] = '\0'; // Null terminator
+    
 
     // Conversão para inteiros e soma dos valores
 
     int valor1 = atoi(conjunto1);
     int valor2 = atoi(conjunto2);
-    int valor3 = atoi(conjunto3);
+    
 
-    int soma = valor1 + valor2 + valor3;
+    int soma = valor1 + valor2;
 
     // Retirar primeiro digito caso ultrupassar 3 digitos
 
@@ -296,7 +296,7 @@ int funcao_hash_B(const char *matricula, int tamanho)
     strncpy(matricula_aux, matricula, sizeof(matricula_aux) - 1);
     matricula_aux[sizeof(matricula_aux) - 1] = '\0'; // Garantir que a string esteja terminada
 
-    char saida[3] = {0}; // Array para armazenar o resultado do fold shift
+    char saida[4] = {0}; // Array para armazenar o resultado do fold shift
 
     fold_shift(matricula_aux, saida); // Aplica o fold shift na matrícula
 
